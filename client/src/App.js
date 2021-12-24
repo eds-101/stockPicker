@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const stocksUrl = 'https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com&symbols=TSLA'
 
@@ -10,30 +9,20 @@ async function getStocks() {
 }
 
 function App() {
+  const [price, setPrice] = useState(-1) 
   
   useEffect(() => {
     getStocks()
       .then((data) => {
-        console.log(data)
+        const tsla = data.quoteResponse.result[0]
+        console.log(tsla)
+        setPrice(tsla.regularMarketPrice)
       })
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="price">
+      {price}
     </div>
   );
 }
