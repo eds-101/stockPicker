@@ -22,7 +22,7 @@ function App() {
       timeoutId = setTimeout(getLatestPrice, 5000)
     }
     
-    timeoutId = setTimeout(getLatestPrice, 5000)
+    getLatestPrice()
     return () => {
       // Stops updating if the component is unmounted by clearing the timer
       clearTimeout(timeoutId)
