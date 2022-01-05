@@ -10,6 +10,7 @@ async function getStocks() {
 
 function App() {
   const [price, setPrice] = useState(-1) 
+  const [priceTime, setPriceTime] = useState(null)
   
   useEffect(() => {
     let timeoutId;
@@ -17,11 +18,13 @@ function App() {
       const data = await getStocks()
       const tesla = data.quoteResponse.result[0]
       setPrice(tesla.regularMarketPrice.toFixed(2))
+      setPriceTime(new Date(tesla.regularMarketTime * 1000)) 
       timeoutId = setTimeout(getLatestPrice, 5000)
     }
-
+    
     timeoutId = setTimeout(getLatestPrice, 5000)
     return () => {
+      // Stops updating if the component is unmounted by clearing the timer
       clearTimeout(timeoutId)
     }
     
@@ -29,8 +32,13 @@ function App() {
   }, [])
 
   return (
-    <div className="price">
-      {price}
+    <div>
+      <div className="price">
+        {price}
+      </div>
+      <div className="price-time">
+        {priceTime && priceTime.toLocaleTimeString()}
+      </div>
     </div>
   );
 }
