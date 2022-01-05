@@ -17,7 +17,7 @@ function App() {
     async function getLatestPrice() {
       const data = await getStocks()
       const tesla = data.quoteResponse.result[0]
-      setPrice(tesla.regularMarketPrice.toFixed(2))
+      setPrice('$' + tesla.regularMarketPrice.toFixed(2))
       setPriceTime(new Date(tesla.regularMarketTime * 1000)) 
       timeoutId = setTimeout(getLatestPrice, 5000)
     }
