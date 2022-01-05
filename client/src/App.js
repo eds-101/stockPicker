@@ -12,12 +12,20 @@ function App() {
   const [price, setPrice] = useState(-1) 
   
   useEffect(() => {
-    getStocks()
-      .then((data) => {
-        const tsla = data.quoteResponse.result[0]
-        console.log(tsla)
-        setPrice(tsla.regularMarketPrice)
-      })
+    let timeoutId;
+    async function getLatestPrice() {
+      const data = await getStocks()
+      const tesla = data.quoteResponse.result[0]
+      setPrice(tesla.regularMarketPrice.toFixed(2))
+      timeoutId = setTimeout(getLatestPrice, 5000)
+    }
+
+    timeoutId = setTimeout(getLatestPrice, 5000)
+    return () => {
+      clearTimeout(timeoutId)
+    }
+    
+
   }, [])
 
   return (
