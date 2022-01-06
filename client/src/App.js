@@ -16,11 +16,13 @@ function App() {
   
   useEffect(() => {
     let timeoutId;
+    
     async function getLatestPrice() {
       const data = await getStocks()
       const tesla = data.quoteResponse.result[0]
       setPrevPrice(price)
-      setPrice('$' + tesla.regularMarketPrice.toFixed(2))
+      setPrice(tesla.regularMarketPrice.toFixed(2))
+      console.log(prevPrice + ' , ' + price)
       setPriceTime(new Date(tesla.regularMarketTime * 1000)) 
       timeoutId = setTimeout(getLatestPrice, 5000)
     }
@@ -36,7 +38,9 @@ function App() {
 
   return (
     <div>
-      <div className="price">
+      <div className={['price', prevPrice < price ? 'up' : prevPrice > price ? 'down' : ''].join(" ")}>
+      {/* <div className={['price', prevPrice < price ? 'up' : 'down'].join(" ")}> */}
+
         {price}
       </div>
       <div className="price-time">
