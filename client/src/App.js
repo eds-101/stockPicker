@@ -18,16 +18,21 @@ function App() {
     let timeoutId;
     
     async function getLatestPrice() {
-      const data = await getStocks()
-      const tesla = data.quoteResponse.result[0]
+      const price = await getStocks()
+      return price.quoteResponse.result[0]
+    }
+
+    async function updateData() {
+      const data = await getLatestPrice()
+
+      setPriceTime(new Date(data.regularMarketTime * 1000)) 
       setPrevPrice(price)
-      setPrice(tesla.regularMarketPrice.toFixed(2))
+      setPrice(data.regularMarketPrice.toFixed(2))
       console.log(prevPrice + ' , ' + price)
-      setPriceTime(new Date(tesla.regularMarketTime * 1000)) 
       timeoutId = setTimeout(getLatestPrice, 5000)
     }
     
-    getLatestPrice()
+    updateData()
     return () => {
       // Stops updating if the component is unmounted by clearing the timer
       clearTimeout(timeoutId)
