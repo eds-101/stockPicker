@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 const stocksUrl = 'https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com&symbols=TSLA'
 
 async function getStocks() {
+  // Needs CORS approval when running on localhost
+  // Used Moesif CORS Google Chrome extension to bypass this
   const response = await fetch(stocksUrl)
   return response.json()
 }
