@@ -14,17 +14,4 @@ code {
 
 .price {
   font-size: xx-large;
-  text-align: center;
-}
-
-.price-time {
-  text-align: center;
-}
-
-.up {
-  color: green
-}
-
-.down {
-  color: red
 }
