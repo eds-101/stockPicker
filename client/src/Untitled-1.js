@@ -44,8 +44,7 @@ function App() {
 
     <div>
       <div className={['price', prevPrice < price ? 'up' : prevPrice > price ? 'down' : ''].join(" ")}>
-        {/* <div className={['price', prevPrice < price ? 'up' : 'down'].join(" ")}> */}
-        {prevPrice} ==> {price}
+        {price}
       </div>
       <div className="price-time">
         {priceTime && priceTime}
