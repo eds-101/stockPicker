@@ -23,18 +23,6 @@ function App() {
     history: []
   })
   const [priceTime, setPriceTime] = useState(null)
-  // const [priceColour, setPriceColour] = useReducer(updateColour, '');
-  
-  // function updateColour(state, action) {
-  //   switch (action.type) {
-  //     case(stockPrice.previous < stockPrice.latest):
-  //       return 'greenText'
-  //     case(stockPrice.previous > stockPrice.latest):
-  //       return 'redText'
-  //     default:
-  //       return ""
-  //   }
-  // }
 
   useEffect(() => {
     let timeoutId;
@@ -68,10 +56,8 @@ function App() {
                       stockPrice.previous < stockPrice.latest ?'greenText' 
                       : stockPrice.previous > stockPrice.latest ? 'redText' 
                       : ''].join(" ")}>
-        {'Prev price: $' + stockPrice.previous} <br/>
         {'Current price: $' + stockPrice.latest} <br/>
-        {'History: ' + stockPrice.history} <br/>
-        {priceTime && priceTime}
+        {priceTime}
       </div>
     </div>
   );
