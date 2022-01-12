@@ -15,25 +15,24 @@ async function fetchStockPrice() {
 }
 
 function App() {
-  const [stockPrice, setStockPrice] = useState(1) 
-
+  const [stockPrice, setStockPrice] = useState({
+    latest: 1,
+    previous: 0
+  })
+  
 useEffect( () => {
   const timeoutId = setInterval(async () => {
-    console.log('initial price ', stockPrice)
     const latestStockPrice = await fetchStockPrice()
-    setStockPrice(latestStockPrice)
-
+    setStockPrice(oldPrices => { return {latest: latestStockPrice, previous: oldPrices.latest} })
   }, 5000)
 
   return () => clearInterval(timeoutId)
-
-
-
 }, [])
     
   return (
     <div>
-      {'$' + stockPrice}
+      {'Prev price: $' + stockPrice.previous} <br/>
+      {'Current price: $' + stockPrice.latest}
     </div>
   );
 }
