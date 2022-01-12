@@ -15,3 +15,11 @@ code {
 .price {
   font-size: xx-large;
 }
+
+.greenText {
+  color: #34a853;
+}
+
+.redText {
+  color: #d93025;
+}
