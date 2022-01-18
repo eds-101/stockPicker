@@ -1,16 +1,14 @@
 import './App.css';
 import { useEffect, useState, useReducer } from 'react';
 
-const randomNumber = "http://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=1"
+const stocksUrl = 'https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com&symbols=TSLA'
 
-async function fetchStockPrice() {
+async function fetchStockData() {
   // Needs CORS approval when running on localhost
   // Used Moesif CORS Google Chrome extension to bypass this
   try {
-    const res = await fetch(randomNumber)
-    const result = await res.json()
-    console.log(result[0])
-    return result[0]
+    const response = await fetch(stocksUrl)
+    return response.json()
   } catch(e) {
     console.error(e)
   }
@@ -18,9 +16,7 @@ async function fetchStockPrice() {
 
 function App() {
   const [stockPrice, setStockPrice] = useState({
-    latest: 1,
-    previous: 0,
-    history: []
+    latest: 1, previous: 0, history: []
   })
   const [priceTime, setPriceTime] = useState(null)
 
@@ -37,8 +33,10 @@ function App() {
   }, )
 
   useEffect(() => {  
-    async function updateStockPrice() {  
-      const latestStockPrice = await fetchStockPrice()
+    async function updateStockData() {  
+      const stockData = await fetchStockData()
+      console.log(stockData)
+      const latestStockPrice = stockData.quoteResponse.result[0].regularMarketPrice.toFixed(2)
       setStockPrice(oldPrices => { 
         return {
         latest: latestStockPrice, 
@@ -47,7 +45,7 @@ function App() {
         }}
       )
     }
-    updateStockPrice()
+    updateStockData()
   }, [priceTime])
     
   return (
@@ -56,10 +54,10 @@ function App() {
                       stockPrice.previous < stockPrice.latest ?'greenText' 
                       : stockPrice.previous > stockPrice.latest ? 'redText' 
                       : ''].join(" ")}>
-        {'Prev price: $' + stockPrice.previous} <br/>
+        {'TSLA'} <br/>
         {'Current price: $' + stockPrice.latest} <br/>
-        {'History: ' + stockPrice.history} <br/>
-        {priceTime && priceTime}
+        {/* {'History: ' + stockPrice.history} <br/> */}
+        {priceTime}
       </div>
     </div>
   );
