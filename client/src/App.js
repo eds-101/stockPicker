@@ -23,23 +23,11 @@ function App() {
     history: []
   })
   const [priceTime, setPriceTime] = useState(null)
-  // const [priceColour, setPriceColour] = useReducer(updateColour, '');
-  
-  // function updateColour(state, action) {
-  //   switch (action.type) {
-  //     case(stockPrice.previous < stockPrice.latest):
-  //       return 'greenText'
-  //     case(stockPrice.previous > stockPrice.latest):
-  //       return 'redText'
-  //     default:
-  //       return ""
-  //   }
-  // }
 
   useEffect(() => {
     let timeoutId;
     async function updateTime() {
-      setPriceTime(new Date().toString())
+      setPriceTime(new Date().toLocaleString())
       timeoutId = setTimeout(updateTime, 5000)
     }
     updateTime()
